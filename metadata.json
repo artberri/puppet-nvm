@@ -1,0 +1,17 @@
+{
+  "name": "artberri-nvm",
+  "version": "0.1.0",
+  "author": "artberri",
+  "summary": "Puppet Module to install Node.js with Node Version Manager (NVM)",
+  "license": "Apache-2.0",
+  "source": "https://github.com/artberri/puppet-nvm",
+  "project_page": "https://github.com/artberri/puppet-nvm",
+  "issues_url": "https://github.com/artberri/puppet-nvm/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    }
+  ]
+}
+
