@@ -1,5 +1,7 @@
 # Puppet NVM
 
+[![Build Status](https://travis-ci.org/artberri/puppet-nvm.svg?branch=master)](https://travis-ci.org/artberri/puppet-nvm)
+
 A puppet module to install (multiple versions of) Node.js with NVM (Node Version Manager).
 
 #### Table of Contents
