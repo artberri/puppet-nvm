@@ -18,7 +18,6 @@ describe 'nvm::node::install', :type => :define do
                     .with_command('. nvm_dir/nvm.sh && nvm install  0.12.7')
                     .with_user('foo')
                     .with_unless('. nvm_dir/nvm.sh && nvm which 0.12.7')
-                    .with_environment('["NVM_DIR=nvm_dir"]')
                     .that_requires('Class[nvm::install]')
                     .with_provider('shell')
     }
@@ -38,14 +37,12 @@ describe 'nvm::node::install', :type => :define do
                     .with_command('. nvm_dir/nvm.sh && nvm install  0.12.7')
                     .with_user('foo')
                     .with_unless('. nvm_dir/nvm.sh && nvm which 0.12.7')
-                    .with_environment('["NVM_DIR=nvm_dir"]')
                     .that_requires('Class[nvm::install]')
                     .with_provider('shell')
     }
     it { should contain_exec('nvm set node version 0.12.7 as default')
                     .with_command('. nvm_dir/nvm.sh && nvm alias default 0.12.7')
                     .with_user('foo')
-                    .with_environment('["NVM_DIR=nvm_dir"]')
                     .with_unless('. nvm_dir/nvm.sh && nvm which default | grep 0.12.7')
                     .with_provider('shell')
     }
@@ -64,7 +61,6 @@ describe 'nvm::node::install', :type => :define do
                     .with_command('. nvm_dir/nvm.sh && nvm install  -s  0.12.7')
                     .with_user('foo')
                     .with_unless('. nvm_dir/nvm.sh && nvm which 0.12.7')
-                    .with_environment('["NVM_DIR=nvm_dir"]')
                     .that_requires('Class[nvm::install]')
                     .with_provider('shell')
     }
@@ -72,7 +68,7 @@ describe 'nvm::node::install', :type => :define do
   end
 
   context 'without required param user' do
-    it { expect { catalogue }.to raise_error Puppet::Error, /Must pass user to Nvm::Node::Install/ }
+    it { expect { catalogue }.to raise_error }
   end
 
 
