@@ -32,7 +32,7 @@ Checklist (and a short version for the impatient)
       feature you are adding.
 
     - Make sure the test suites passes after your commit:
-      `bundle exec rspec spec/acceptance` More information on [testing](#Testing) below
+      `bundle exec rake beaker` More information on [testing](#Testing) below
 
     - When introducing a new feature, make sure it is properly
       documented in the README.md
@@ -43,18 +43,17 @@ Checklist (and a short version for the impatient)
 
       - Make sure you have a [GitHub account](https://github.com/join)
 
-      - [Create a ticket](https://tickets.puppetlabs.com/secure/CreateIssue!default.jspa), or [watch the ticket](https://tickets.puppetlabs.com/browse/) you are patching for.
+      - [Create an issue](https://github.com/artberri/puppet-nvm/issues/new), or [watch the issue](https://github.com/artberri/puppet-nvm/issues) you are patching for.
 
     * Preferred method:
 
       - Fork the repository on GitHub.
 
       - Push your changes to a topic branch in your fork of the
-        repository. (the format ticket/1234-short_description_of_change is
+        repository. (the format issue/1234-short_description_of_change is
         usually preferred for this project).
 
-      - Submit a pull request to the repository in the puppetlabs
-        organization.
+      - Submit a pull request to the master branch of the artberri/puppet-nvm repository.
 
 The long version
 ================
@@ -134,18 +133,18 @@ on your system, then use it to install all dependencies needed for this project,
 by running
 
 ```shell
-% bundle install
-Fetching gem metadata from https://rubygems.org/........
-Fetching gem metadata from https://rubygems.org/..
-Using rake (10.1.0)
-Using builder (3.2.2)
--- 8><-- many more --><8 --
-Using rspec-system-puppet (2.2.0)
-Using serverspec (0.6.3)
-Using rspec-system-serverspec (1.0.0)
-Using bundler (1.3.5)
-Your bundle is complete!
-Use `bundle show [gemname]` to see where a bundled gem is installed.
+bundle install
+#Fetching gem metadata from https://rubygems.org/........
+#Fetching gem metadata from https://rubygems.org/..
+#Using rake (10.1.0)
+#Using builder (3.2.2)
+#-- 8><-- many more --><8 --
+#Using rspec-system-puppet (2.2.0)
+#Using serverspec (0.6.3)
+#Using rspec-system-serverspec (1.0.0)
+#Using bundler (1.3.5)
+#Your bundle is complete!
+#Use `bundle show [gemname]` to see where a bundled gem is installed.
 ```
 
 NOTE some systems may require you to run this command with sudo.
@@ -153,22 +152,22 @@ NOTE some systems may require you to run this command with sudo.
 If you already have those gems installed, make sure they are up-to-date:
 
 ```shell
-% bundle update
+bundle update
 ```
 
 With all dependencies in place and up-to-date we can now run the tests:
 
 ```shell
-% rake spec
+bundle exec rake test
 ```
 
-This will execute all the [rspec tests](http://rspec-puppet.com/) tests
+This will execute different linting and checks including all the [rspec tests](http://rspec-puppet.com/) tests
 under [spec/defines](./spec/defines), [spec/classes](./spec/classes),
 and so on. rspec tests may have the same kind of dependencies as the
-module they are testing. While the module defines in its [Modulefile](./Modulefile),
+module they are testing. While the module defines in its [metadata](./metadata.json),
 rspec tests define them in [.fixtures.yml](./fixtures.yml).
 
-Some puppet modules also come with [beaker](https://github.com/puppetlabs/beaker)
+This module also come with [beaker](https://github.com/puppetlabs/beaker)
 tests. These tests spin up a virtual machine under
 [VirtualBox](https://www.virtualbox.org/)) with, controlling it with
 [Vagrant](http://www.vagrantup.com/) to actually simulate scripted test
@@ -178,18 +177,48 @@ installed on your system.
 You can run them by issuing the following command
 
 ```shell
-% rake spec_clean
-% rspec spec/acceptance
+bundle exec rake beaker
 ```
 
 This will now download a pre-fabricated image configured in the [default node-set](./spec/acceptance/nodesets/default.yml),
 install puppet, copy this module and install its dependencies per [spec/spec_helper_acceptance.rb](./spec/spec_helper_acceptance.rb)
 and then run all the tests under [spec/acceptance](./spec/acceptance).
 
-Writing Tests
--------------
+You should also run the module in [all available nodesets](./spec/acceptance/nodesets/). To run beaker tests, first get a list of available nodesets:
 
-XXX getting started writing tests.
+```shell
+bundle exec rake beaker_nodes
+# centos-65-x64
+# centos-70-x64
+# debian-73-x64
+# default
+# ubuntu-server-12042-x64
+# ubuntu-server-1404-x64
+```
+
+To kick off beaker tests for a particular platform, run commands like the following: (probably one at a time)
+
+```shell
+BEAKER_set=centos-65-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
+BEAKER_set=centos-70-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
+BEAKER_set=debian-73-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
+BEAKER_set=ubuntu-server-12042-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
+BEAKER_set=ubuntu-server-1404-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
+```
+
+How to run all the test and validations
+------------------------------
+
+```bash
+bundle install
+
+# clean prior builds:
+bundle exec rake clean
+
+# run all the tests
+bundle exec rake test
+./spec/run_virtualbox_tests.sh # this will take a long time
+```
 
 If you have commit access to the repository
 ===========================================
