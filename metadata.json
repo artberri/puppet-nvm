@@ -1,6 +1,6 @@
 {
   "name": "artberri-nvm",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "artberri",
   "summary": "Puppet Module to install Node.js with Node Version Manager (NVM)",
   "description": "A puppet module to install (multiple versions of) Node.js with NVM (Node Version Manager).",

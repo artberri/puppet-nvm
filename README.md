@@ -100,7 +100,7 @@ class { 'nvm':
   nvm_dir => '/opt/nvm',
   version => 'v0.29.0',
   profile_path => '/etc/profile.d/nvm.sh',
-  default_node => '0.12.7',
+  install_node => '0.12.7',
 }
 ```
 
@@ -114,7 +114,7 @@ class { 'nvm':
   nvm_dir => '/opt/nvm',
   version => 'v0.29.0',
   profile_path => '/etc/profile.d/nvm.sh',
-  default_node => '0.12.7',
+  install_node => '0.12.7',
 }
 
 package { 'forever':
