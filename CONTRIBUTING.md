@@ -43,18 +43,17 @@ Checklist (and a short version for the impatient)
 
       - Make sure you have a [GitHub account](https://github.com/join)
 
-      - [Create a ticket](https://tickets.puppetlabs.com/secure/CreateIssue!default.jspa), or [watch the ticket](https://tickets.puppetlabs.com/browse/) you are patching for.
+      - [Create an issue](https://github.com/artberri/puppet-nvm/issues/new), or [watch the issue](https://github.com/artberri/puppet-nvm/issues) you are patching for.
 
     * Preferred method:
 
       - Fork the repository on GitHub.
 
       - Push your changes to a topic branch in your fork of the
-        repository. (the format ticket/1234-short_description_of_change is
+        repository. (the format issue/1234-short_description_of_change is
         usually preferred for this project).
 
-      - Submit a pull request to the repository in the puppetlabs
-        organization.
+      - Submit a pull request to the master branch of the artberri/puppet-nvm repository.
 
 The long version
 ================
@@ -189,13 +188,10 @@ You should also run the module in [all available nodesets](./spec/acceptance/nod
 
 ```shell
 bundle exec rake beaker_nodes
-# centos-59-x64
-# centos-64-x64-pe
 # centos-65-x64
 # centos-70-x64
 # debian-73-x64
 # default
-# ubuntu-server-10044-x64
 # ubuntu-server-12042-x64
 # ubuntu-server-1404-x64
 ```
@@ -203,12 +199,9 @@ bundle exec rake beaker_nodes
 To kick off beaker tests for a particular platform, run commands like the following: (probably one at a time)
 
 ```shell
-BEAKER_set=centos-59-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
-BEAKER_set=centos-64-x64-pe BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
 BEAKER_set=centos-65-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
 BEAKER_set=centos-70-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
 BEAKER_set=debian-73-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
-BEAKER_set=ubuntu-server-10044-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
 BEAKER_set=ubuntu-server-12042-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
 BEAKER_set=ubuntu-server-1404-x64 BEAKER_destroy=onpass BEAKER_provision=yes bundle exec rake beaker
 ```
@@ -224,7 +217,7 @@ bundle exec rake clean
 
 # run all the tests
 bundle exec rake test
-./spec/run_virtualbox_tests.sh # this will take a long time, possibly hours
+./spec/run_virtualbox_tests.sh # this will take a long time
 ```
 
 If you have commit access to the repository

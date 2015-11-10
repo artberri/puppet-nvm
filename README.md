@@ -251,12 +251,17 @@ Default: `false`.
 
 This module can not work on Windows and should work on LINUX systems.
 
-Although this module should work in any Linux server is tested only against [open source Puppet](http://docs.puppetlabs.com/puppet/) on:
+This module is CI tested against [open source Puppet](http://docs.puppetlabs.com/puppet/) on:
 
-- CentOS 7
-- Ubuntu 14.04
+- CentOS 6 and 7
+- Ubuntu 12.04 and 14.04
+- Debian 7
 
-Report an [issue](../../issues) if this module does not work in any Linux distro.
+This module has been tested in a production OpenLogic7 (Centos7) server in Azure.
+
+This module should also work properly in other distributions and operating systems, such as FreeBSD, Gentoo, and Amazon Linux, but is not formally tested on them.
+
+Report an [issue](../../issues) if this module does not work properly in any Linux distro.
 
 ## Development
 
@@ -268,6 +273,8 @@ For more information, please read the complete [module contribution guide][CONTR
 
 ### Running tests
 
+This project contains tests for both [rspec-puppet](http://rspec-puppet.com/) and [beaker-rspec](https://github.com/puppetlabs/beaker-rspec) to verify functionality. For detailed information on using these tools, please see their respective documentation.
+
 This project contains tests for [rspec-puppet](http://rspec-puppet.com/) to verify functionality. For detailed information on using these tools, please see their respective documentation.
 
 #### Testing quickstart
@@ -276,6 +283,7 @@ This project contains tests for [rspec-puppet](http://rspec-puppet.com/) to veri
 gem install bundler
 bundle install
 bundle exec rake test
+./spec/run_virtualbox_tests.sh # this will take a long time
 ```
 
 
