@@ -2,8 +2,8 @@
 class nvm (
   $user,
   $home                = "/home/${user}",
-  $nvm_dir             = "/home/${user}/.nvm",
-  $profile_path        = "/home/${user}/.bashrc",
+  $nvm_dir             = "${home}/.nvm",
+  $profile_path        = "${home}/.bashrc",
   $version             = $nvm::params::version,
   $manage_user         = $nvm::params::manage_user,
   $manage_dependencies = $nvm::params::manage_dependencies,
