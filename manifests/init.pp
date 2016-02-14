@@ -76,6 +76,7 @@ class nvm (
   if $install_node {
     nvm::node::install { $install_node:
       user    => $user,
+      home    => $home,
       nvm_dir => $nvm_dir,
       default => true,
     }
