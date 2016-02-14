@@ -47,6 +47,7 @@ class nvm (
 
   class { 'nvm::install':
     user         => $user,
+    home         => $home,
     version      => $version,
     nvm_dir      => $nvm_dir,
     nvm_repo     => $nvm_repo,

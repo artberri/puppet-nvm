@@ -1,6 +1,7 @@
 # See README.md for usage information
 class nvm::install (
   $user,
+  $home,
   $version,
   $nvm_dir,
   $nvm_repo,
@@ -10,7 +11,7 @@ class nvm::install (
 
   exec { "git clone ${nvm_repo} ${nvm_dir}":
     command => "git clone ${nvm_repo} ${nvm_dir}",
-    cwd     => $nvm::home,
+    cwd     => $home,
     user    => $user,
     unless  => "test -d ${nvm_dir}/.git",
     require => $dependencies,
