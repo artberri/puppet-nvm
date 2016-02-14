@@ -81,5 +81,9 @@ class nvm (
     }
   }
 
+  $nodes_defaults = {
+    'user'    =>  $user
+  }
+
   create_resources(nvm::node::install, $::nvm::nodes)
 }
