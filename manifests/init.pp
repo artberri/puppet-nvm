@@ -47,6 +47,7 @@ class nvm (
 
   class { 'nvm::install':
     user         => $user,
+    home         => $home,
     version      => $version,
     nvm_dir      => $nvm_dir,
     nvm_repo     => $nvm_repo,
@@ -75,6 +76,7 @@ class nvm (
   if $install_node {
     nvm::node::install { $install_node:
       user    => $user,
+      home    => $home,
       nvm_dir => $nvm_dir,
       default => true,
     }

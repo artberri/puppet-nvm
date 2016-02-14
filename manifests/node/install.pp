@@ -1,6 +1,7 @@
 # See README.md for usage information
 define nvm::node::install (
   $user,
+  $home        = "/home/${user}",
   $nvm_dir     = "/home/${user}/.nvm",
   $version     = $title,
   $default     = false,
@@ -26,7 +27,8 @@ define nvm::node::install (
   }
 
   exec { "nvm install node version ${version}":
-    command     => ". ${nvm_dir}/nvm.sh && nvm install ${nvm_install_options} ${version}",
+    command     => "/bin/bash -c '. ${nvm_dir}/nvm.sh && nvm install ${nvm_install_options} ${version}' && env",
+    cwd         => $home,
     user        => $user,
     unless      => ". ${nvm_dir}/nvm.sh && nvm which ${version}",
     environment => [ "NVM_DIR=${nvm_dir}" ],
@@ -37,6 +39,7 @@ define nvm::node::install (
   if $default {
     exec { "nvm set node version ${version} as default":
       command     => ". ${nvm_dir}/nvm.sh && nvm alias default ${version}",
+      cwd         => $home,
       user        => $user,
       environment => [ "NVM_DIR=${nvm_dir}" ],
       unless      => ". ${nvm_dir}/nvm.sh && nvm which default | grep ${version}",
