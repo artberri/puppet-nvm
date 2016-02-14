@@ -10,10 +10,11 @@ class nvm::install (
 
   exec { "git clone ${nvm_repo} ${nvm_dir}":
     command => "git clone ${nvm_repo} ${nvm_dir}",
+    cwd     => $nvm::home,
     user    => $user,
     unless  => "test -d ${nvm_dir}/.git",
     require => $dependencies,
-    notify  => Exec["git checkout ${nvm_repo} ${version}"]
+    notify  => Exec["git checkout ${nvm_repo} ${version}"],
   }
 
   if $refetch {
