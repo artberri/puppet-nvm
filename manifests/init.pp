@@ -11,6 +11,7 @@ class nvm (
   $nvm_repo            = $nvm::params::nvm_repo,
   $refetch             = $nvm::params::refetch,
   $install_node        = $nvm::params::install_node,
+  $nodes               = {},
 ) inherits ::nvm::params {
 
   validate_string($user)
@@ -80,4 +81,5 @@ class nvm (
     }
   }
 
+  create_resources(nvm::node::install, $::nvm::nodes)
 }
