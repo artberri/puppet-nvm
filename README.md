@@ -90,6 +90,20 @@ nvm::node::install { 'iojs':
 }
 ```
 
+or Hiera:
+
+```yaml
+---
+nvm::nodes:
+  '0.12.7':
+    user: 'foo'
+    default: true
+  '0.10.36':
+    user: 'foo'
+  'iojs':
+    user: 'foo'
+```
+
 ### Installing Node.js globally
 
 It isn't the recommended way but you can install Node.js globally.
