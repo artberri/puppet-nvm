@@ -69,7 +69,7 @@ describe 'nvm::install', :type => :class do
   end
 
   context 'without required param user' do
-    it { expect { catalogue }.to raise_error(Puppet::PreformattedError) }
+    it { expect { catalogue }.to raise_error }
   end
 
 

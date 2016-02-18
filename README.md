@@ -140,7 +140,7 @@ When this class is declared with the default options, Puppet:
 You can simply declare the default `nvm` class:
 
 ``` puppet
-class { 'nvm': 
+class { 'nvm':
   user => 'foo',
 }
 ```
@@ -267,9 +267,9 @@ Report an [issue](../../issues) if this module does not work properly in any Lin
 
 ### Contributing
 
-This modules is an open project, and community contributions are highly appreciated. 
+This modules is an open project, and community contributions are highly appreciated.
 
-For more information, please read the complete [module contribution guide][CONTRIBUTING.md].
+For more information, please read the complete [module contribution guide](CONTRIBUTING.md).
 
 ### Running tests
 
