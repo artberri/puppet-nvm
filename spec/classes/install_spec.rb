@@ -6,6 +6,7 @@ describe 'nvm::install', :type => :class do
     let :params do
     {
       :user => 'foo',
+      :home => '/home/foo',
       :version => 'version',
       :nvm_dir => 'nvm_dir',
       :nvm_repo => 'nvm_repo',
@@ -17,7 +18,8 @@ describe 'nvm::install', :type => :class do
     it { should contain_exec('git clone nvm_repo nvm_dir')
                     .with_command('git clone nvm_repo nvm_dir')
                     .with_user('foo')
-                    .with_unless('test -d nvm_dir/.git')
+                    .with_cwd('/home/foo')
+                    .with_unless('/usr/bin/test -d nvm_dir/.git')
                     .with_require('dependencies')
                     .that_notifies('Exec[git checkout nvm_repo version]')
     }
@@ -30,10 +32,11 @@ describe 'nvm::install', :type => :class do
     }
   end
 
-  context 'with refectch => true' do
+  context 'with refetch => true' do
     let :params do
     {
       :user => 'foo',
+      :home => '/home/foo',
       :version => 'version',
       :nvm_dir => 'nvm_dir',
       :nvm_repo => 'nvm_repo',
@@ -45,7 +48,8 @@ describe 'nvm::install', :type => :class do
     it { should contain_exec('git clone nvm_repo nvm_dir')
                     .with_command('git clone nvm_repo nvm_dir')
                     .with_user('foo')
-                    .with_unless('test -d nvm_dir/.git')
+                    .with_cwd('/home/foo')
+                    .with_unless('/usr/bin/test -d nvm_dir/.git')
                     .with_require('dependencies')
                     .that_notifies('Exec[git checkout nvm_repo version]')
     }
@@ -53,7 +57,7 @@ describe 'nvm::install', :type => :class do
                     .with_command('git fetch')
                     .with_cwd('nvm_dir')
                     .with_user('foo')
-                    .that_requires('Exec[git clone nvm_repo nvm_dir]')
+                    .with_require('Exec[git clone nvm_repo nvm_dir]')
                     .that_notifies('Exec[git checkout nvm_repo version]')
     }
     it { should contain_exec('git checkout nvm_repo version')
@@ -65,7 +69,7 @@ describe 'nvm::install', :type => :class do
   end
 
   context 'without required param user' do
-    it { expect { catalogue }.to raise_error }
+    it { expect { catalogue }.to raise_error(Puppet::PreformattedError) }
   end
 
 

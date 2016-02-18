@@ -1,7 +1,7 @@
 # See README.md for usage information
 define nvm::node::install (
   $user,
-  $nvm_dir     = "/home/${user}/.nvm",
+  $nvm_dir     = undef,
   $version     = $title,
   $default     = false,
   $from_source = false,
@@ -12,8 +12,15 @@ define nvm::node::install (
     fail('You must include the nvm base class before using any nvm defined resources')
   }
 
+  if $nvm_dir == undef {
+    $final_nvm_dir = "/home/${user}/.nvm"
+  }
+  else {
+    $final_nvm_dir = $nvm_dir
+  }
+
   validate_string($user)
-  validate_string($nvm_dir)
+  validate_string($final_nvm_dir)
   validate_string($version)
   validate_bool($default)
   validate_bool($from_source)
@@ -26,20 +33,22 @@ define nvm::node::install (
   }
 
   exec { "nvm install node version ${version}":
-    command     => ". ${nvm_dir}/nvm.sh && nvm install ${nvm_install_options} ${version}",
+    cwd         => $final_nvm_dir,
+    command     => ". ${final_nvm_dir}/nvm.sh && nvm install ${nvm_install_options} ${version}",
     user        => $user,
-    unless      => ". ${nvm_dir}/nvm.sh && nvm which ${version}",
-    environment => [ "NVM_DIR=${nvm_dir}" ],
+    unless      => ". ${final_nvm_dir}/nvm.sh && nvm which ${version}",
+    environment => [ "NVM_DIR=${final_nvm_dir}" ],
     require     => Class['nvm::install'],
     provider    => shell,
   }
 
   if $default {
     exec { "nvm set node version ${version} as default":
-      command     => ". ${nvm_dir}/nvm.sh && nvm alias default ${version}",
+      cwd         => $final_nvm_dir,
+      command     => ". ${final_nvm_dir}/nvm.sh && nvm alias default ${version}",
       user        => $user,
-      environment => [ "NVM_DIR=${nvm_dir}" ],
-      unless      => ". ${nvm_dir}/nvm.sh && nvm which default | grep ${version}",
+      environment => [ "NVM_DIR=${final_nvm_dir}" ],
+      unless      => ". ${final_nvm_dir}/nvm.sh && nvm which default | grep ${version}",
       provider    => shell,
       require     => Exec["nvm install node version ${version}"],
     }

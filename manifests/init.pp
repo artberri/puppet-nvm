@@ -1,9 +1,9 @@
 # See README.md for usage information
 class nvm (
   $user,
-  $home                = "/home/${user}",
-  $nvm_dir             = "/home/${user}/.nvm",
-  $profile_path        = "/home/${user}/.bashrc",
+  $home                = undef,
+  $nvm_dir             = undef,
+  $profile_path        = undef,
   $version             = $nvm::params::version,
   $manage_user         = $nvm::params::manage_user,
   $manage_dependencies = $nvm::params::manage_dependencies,
@@ -13,9 +13,30 @@ class nvm (
   $install_node        = $nvm::params::install_node,
 ) inherits ::nvm::params {
 
+  if $home == undef {
+    $final_home = "/home/${user}"
+  }
+  else {
+    $final_home = $home
+  }
+
+  if $nvm_dir == undef {
+    $final_nvm_dir = "/home/${user}/.nvm"
+  }
+  else {
+    $final_nvm_dir = $nvm_dir
+  }
+
+  if $profile_path == undef {
+    $final_profile_path = "/home/${user}/.bashrc"
+  }
+  else {
+    $final_profile_path = $profile_path
+  }
+
   validate_string($user)
-  validate_string($home)
-  validate_string($nvm_dir)
+  validate_string($final_home)
+  validate_string($final_nvm_dir)
   validate_string($version)
   validate_bool($manage_user)
   validate_bool($manage_dependencies)
@@ -39,7 +60,7 @@ class nvm (
   if $manage_user {
     user { $user:
       ensure     => present,
-      home       => $home,
+      home       => $final_home,
       managehome => true,
       before     => Class['nvm::install']
     }
@@ -47,27 +68,28 @@ class nvm (
 
   class { 'nvm::install':
     user         => $user,
+    home         => $final_home,
     version      => $version,
-    nvm_dir      => $nvm_dir,
+    nvm_dir      => $final_nvm_dir,
     nvm_repo     => $nvm_repo,
     dependencies => $nvm_install_require,
     refetch      => $refetch,
   }
 
   if $manage_profile {
-    file { "ensure ${profile_path}":
+    file { "ensure ${final_profile_path}":
       ensure => 'present',
-      path   => $profile_path,
+      path   => $final_profile_path,
       owner  => $user,
     } ->
 
     file_line { 'add NVM_DIR to profile file':
-      path => $profile_path,
-      line => "export NVM_DIR=${nvm_dir}",
+      path => $final_profile_path,
+      line => "export NVM_DIR=${final_nvm_dir}",
     } ->
 
     file_line { 'add . ~/.nvm/nvm.sh to profile file':
-      path => $profile_path,
+      path => $final_profile_path,
       line => "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"  # This loads nvm",
     }
   }
@@ -75,7 +97,7 @@ class nvm (
   if $install_node {
     nvm::node::install { $install_node:
       user    => $user,
-      nvm_dir => $nvm_dir,
+      nvm_dir => $final_nvm_dir,
       default => true,
     }
   }
