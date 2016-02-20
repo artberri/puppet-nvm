@@ -1,6 +1,6 @@
 # Change Log for puppet module artberri-nvm
 
-## ?? - v1.1.0
+## 2016-02-20 - v1.1.0
 
 ### Summary
 
