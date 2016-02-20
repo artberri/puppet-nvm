@@ -78,7 +78,7 @@ class { 'nvm':
 
 nvm::node::install { '0.12.7':
     user    => 'foo',
-    default => true,
+    set_default => true,
 } ->
 
 nvm::node::install { '0.10.36':
@@ -87,6 +87,21 @@ nvm::node::install { '0.10.36':
 
 nvm::node::install { 'iojs':
     user => 'foo',
+}
+```
+
+Or:
+
+```puppet
+class { 'nvm':
+  user           => 'foo',
+  node_instances => {
+    '0.12.7' => {
+      set_default => true,
+    },
+    '0.10.36' => {},
+    'iojs' => {},
+  }
 }
 ```
 
@@ -213,6 +228,12 @@ Installs a default Node.js version. Could be set to any NVM Node.js version name
 
 Default: `undef`.
 
+#### `node_instances`
+
+A hash with the node instances you want to install (it will be used to create `nvm::node::install` instances with `create_resources`).
+
+Default: {}.
+
 ### Define: `nvm::node::install`
 
 Installs a Node.js version.
@@ -235,7 +256,13 @@ Node.js version. Could be set to any NVM Node.js version name.
 
 Default: `0.12.7`.
 
-#### `default`
+#### `set_default` *[Since version 1.1.0]*
+
+Determines whether to set this Node.js version as default.
+
+#### `default` *[Deprecated since version 1.1.0 use `set_default` instead]*
+
+This parameter is now deprecated because [is a reserved word](https://docs.puppetlabs.com/puppet/latest/reference/lang_reserved.html#reserved-words), use `set_default` instead. Backguard compatibilty is added but throws a warning message.
 
 Determines whether to set this Node.js version as default.
 
