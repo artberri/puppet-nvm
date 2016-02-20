@@ -13,7 +13,10 @@ class nvm (
   $install_node        = $nvm::params::install_node,
 ) inherits ::nvm::params {
 
-  if $home == undef {
+  if $home == undef and $user == 'root' {
+    $final_home = '/root'
+  }
+  elsif $home == undef {
     $final_home = "/home/${user}"
   }
   else {
