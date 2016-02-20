@@ -3,8 +3,8 @@ class { 'nvm':
 } ->
 
 nvm::node::install { '0.12.7':
-  user    => 'foo',
-  default => true,
+  user        => 'foo',
+  set_default => true,
 } ->
 
 nvm::node::install { '0.10.36':

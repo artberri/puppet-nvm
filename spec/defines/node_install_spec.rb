@@ -6,11 +6,12 @@ describe 'nvm::node::install', :type => :define do
       'class { "nvm": user => "foo" }'
   ] }
 
-  context 'with default => false' do
+  context 'with set_default => false' do
     let :params do
     {
       :user    => 'foo',
-      :nvm_dir => '/nvm_dir'
+      :nvm_dir => '/nvm_dir',
+      :set_default => false,
     }
     end
 
@@ -25,12 +26,12 @@ describe 'nvm::node::install', :type => :define do
     it { should_not contain_exec('nvm set node version 0.12.7 as default') }
   end
 
-  context 'with default => true' do
+  context 'with set_default => true' do
     let :params do
     {
-      :user    => 'foo',
-      :nvm_dir => '/nvm_dir',
-      :default => true
+      :user        => 'foo',
+      :nvm_dir     => '/nvm_dir',
+      :set_default => true,
     }
     end
 
