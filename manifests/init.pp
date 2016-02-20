@@ -11,6 +11,7 @@ class nvm (
   $nvm_repo            = $nvm::params::nvm_repo,
   $refetch             = $nvm::params::refetch,
   $install_node        = $nvm::params::install_node,
+  $nodes               = {},
 ) inherits ::nvm::params {
 
   if $home == undef and $user == 'root' {
@@ -106,4 +107,9 @@ class nvm (
     }
   }
 
+  $nodes_defaults = {
+    'user'    =>  $user
+  }
+
+  create_resources(nvm::node::install, $::nvm::nodes)
 }
