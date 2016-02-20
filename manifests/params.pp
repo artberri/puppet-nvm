@@ -7,4 +7,5 @@ class nvm::params {
   $nvm_repo            = 'https://github.com/creationix/nvm.git'
   $refetch             = false
   $install_node        = undef
+  $node_instances      = {}
 }
