@@ -140,7 +140,7 @@ When this class is declared with the default options, Puppet:
 You can simply declare the default `nvm` class:
 
 ``` puppet
-class { 'nvm': 
+class { 'nvm':
   user => 'foo',
 }
 ```
@@ -155,9 +155,9 @@ Sets the user that will install NVM.
 
 #### `home`
 
-Indicates the user's home. Only used when `manage_user` is set to `true`.
+Indicates the user's home. It needs to be an existing directory if the `manage_user` is not set to `true`.
 
-Default: `/home/${user}`.
+Default: `/home/${user}` (or `/root` if the user is `root`).
 
 #### `nvm_dir`
 
@@ -257,7 +257,7 @@ This module is CI tested against [open source Puppet](http://docs.puppetlabs.com
 - Ubuntu 12.04 and 14.04
 - Debian 7
 
-This module has been tested in a production OpenLogic7 (Centos7) server in Azure.
+This module has been tested in several production servers (OpenLogic7 (Centos7) and Ubuntu 14.04) in Azure.
 
 This module should also work properly in other distributions and operating systems, such as FreeBSD, Gentoo, and Amazon Linux, but is not formally tested on them.
 
@@ -267,9 +267,9 @@ Report an [issue](../../issues) if this module does not work properly in any Lin
 
 ### Contributing
 
-This modules is an open project, and community contributions are highly appreciated. 
+This modules is an open project, and community contributions are highly appreciated.
 
-For more information, please read the complete [module contribution guide][CONTRIBUTING.md].
+For more information, please read the complete [module contribution guide](CONTRIBUTING.md).
 
 ### Running tests
 
