@@ -111,7 +111,28 @@ describe 'nvm', :type => :class do
     it { should contain_nvm__node__install('dummyversion')
                     .with_user('foo')
                     .with_nvm_dir('/home/foo/.nvm')
-                    .with_default(true)
+                    .with_set_default(true)
+    }
+  end
+
+  context 'with multiple node_instances' do
+    let :params do
+    {
+      :user => 'foo',
+      :node_instances => {
+          '0.10.40' => {},
+          '0.12.7'  => {},
+      }
+    }
+    end
+
+    it { should contain_nvm__node__install('0.10.40')
+                    .with_user('foo')
+                    .with_nvm_dir('/home/foo/.nvm')
+    }
+    it { should contain_nvm__node__install('0.12.7')
+                    .with_user('foo')
+                    .with_nvm_dir('/home/foo/.nvm')
     }
   end
 

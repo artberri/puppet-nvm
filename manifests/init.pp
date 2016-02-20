@@ -11,6 +11,7 @@ class nvm (
   $nvm_repo            = $nvm::params::nvm_repo,
   $refetch             = $nvm::params::refetch,
   $install_node        = $nvm::params::install_node,
+  $node_instances      = $nvm::params::node_instances,
 ) inherits ::nvm::params {
 
   if $home == undef and $user == 'root' {
@@ -48,6 +49,7 @@ class nvm (
   if $install_node {
     validate_string($install_node)
   }
+  validate_hash($node_instances)
 
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
@@ -99,11 +101,19 @@ class nvm (
   }
 
   if $install_node {
-    nvm::node::install { $install_node:
-      user    => $user,
-      nvm_dir => $final_nvm_dir,
-      default => true,
-    }
+    $final_node_instances = merge($node_instances, {
+      "${install_node}" => {
+        set_default => true,
+      },
+    })
   }
+  else {
+    $final_node_instances = $node_instances
+  }
+
+  create_resources(::nvm::node::install, $final_node_instances, {
+    user        => $user,
+    nvm_dir     => $final_nvm_dir,
+  })
 
 }
