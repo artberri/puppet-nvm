@@ -40,6 +40,7 @@ class nvm (
   validate_string($user)
   validate_string($final_home)
   validate_string($final_nvm_dir)
+  validate_string($final_profile_path)
   validate_string($version)
   validate_bool($manage_user)
   validate_bool($manage_dependencies)
