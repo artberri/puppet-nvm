@@ -1,6 +1,6 @@
-require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
+require 'metadata-json-lint/rake_task'
 
 PuppetLint.configuration.fail_on_warnings
 PuppetLint.configuration.send('relative')
@@ -33,6 +33,7 @@ end
 desc "Validate, lint and test running"
 task :test do
   Rake::Task[:validate].invoke
+  Rake::Task[:metadata_lint].invoke
   Rake::Task[:lint].invoke
   Rake::Task[:spec].invoke
 end
