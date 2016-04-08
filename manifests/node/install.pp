@@ -13,9 +13,9 @@ define nvm::node::install (
     fail('You must include the nvm base class before using any nvm defined resources')
   }
 
-  # Notify users that uses the deprecated default parameter
+  # Notify users that use the deprecated default parameter
   if $default {
-    notify { 'The `default` parameter is now deprecated because is a reserved word use `set_default` instead': }
+    notify { 'The `default` parameter is now deprecated because `default` is a reserved word use `set_default` instead': }
     $is_default = true
   }
   else {
