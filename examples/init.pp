@@ -1,3 +1,3 @@
-class { 'nvm':
-  user => 'foo',
-}
+class { 'nvm': }
+
+nvm::install { 'foo': }

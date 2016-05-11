@@ -3,7 +3,9 @@ require 'spec_helper'
 describe 'nvm::node::install', :type => :define do
   let(:title) { '0.12.7' }
   let(:pre_condition) { [
-      'class { "nvm": user => "foo" }'
+      'class { "nvm": }',
+      'nvm::install { "foo": }',
+      'nvm::install { "bar": }'
   ] }
 
   context 'with set_default => false' do
@@ -15,15 +17,14 @@ describe 'nvm::node::install', :type => :define do
     }
     end
 
-    it { should contain_exec('nvm install node version 0.12.7')
+    it { should contain_exec('nvm install node version 0.12.7 for foo')
                     .with_cwd('/nvm_dir')
                     .with_command('. /nvm_dir/nvm.sh && nvm install  0.12.7')
                     .with_user('foo')
                     .with_unless('. /nvm_dir/nvm.sh && nvm which 0.12.7')
-                    .that_requires('Class[nvm::install]')
                     .with_provider('shell')
     }
-    it { should_not contain_exec('nvm set node version 0.12.7 as default') }
+    it { should_not contain_exec('nvm set node version 0.12.7 as default for foo') }
   end
 
   context 'with set_default => true' do
@@ -35,15 +36,14 @@ describe 'nvm::node::install', :type => :define do
     }
     end
 
-    it { should contain_exec('nvm install node version 0.12.7')
+    it { should contain_exec('nvm install node version 0.12.7 for foo')
                     .with_cwd('/nvm_dir')
                     .with_command('. /nvm_dir/nvm.sh && nvm install  0.12.7')
                     .with_user('foo')
                     .with_unless('. /nvm_dir/nvm.sh && nvm which 0.12.7')
-                    .that_requires('Class[nvm::install]')
                     .with_provider('shell')
     }
-    it { should contain_exec('nvm set node version 0.12.7 as default')
+    it { should contain_exec('nvm set node version 0.12.7 as default for foo')
                     .with_cwd('/nvm_dir')
                     .with_command('. /nvm_dir/nvm.sh && nvm alias default 0.12.7')
                     .with_user('foo')
@@ -61,15 +61,14 @@ describe 'nvm::node::install', :type => :define do
     }
     end
 
-    it { should contain_exec('nvm install node version 0.12.7')
+    it { should contain_exec('nvm install node version 0.12.7 for foo')
                     .with_cwd('/nvm_dir')
                     .with_command('. /nvm_dir/nvm.sh && nvm install  -s  0.12.7')
                     .with_user('foo')
                     .with_unless('. /nvm_dir/nvm.sh && nvm which 0.12.7')
-                    .that_requires('Class[nvm::install]')
                     .with_provider('shell')
     }
-    it { should_not contain_exec('nvm set node version 0.12.7 as default') }
+    it { should_not contain_exec('nvm set node version 0.12.7 as default for foo') }
   end
 
   context 'without required param user' do

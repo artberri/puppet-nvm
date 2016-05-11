@@ -1,7 +1,7 @@
-class { 'nvm':
-  user => 'foo',
-} ->
+class { 'nvm': }
 
+nvm::install { 'foo': }
+->
 nvm::node::install { '0.12.7':
   user        => 'foo',
   set_default => true,

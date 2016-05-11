@@ -1,22 +1,28 @@
 require 'spec_helper_acceptance'
 
-describe 'nvm::node::install define' do
+describe 'nvm class' do
 
   describe 'running puppet code' do
     pp = <<-EOS
-        class { 'nvm':
-        }
+      class { 'nvm':
+      }
 
-        nvm::install { 'foo': }
+      nvm::install { 'foo': }
+      nvm::install { 'bar': }
 
-        nvm::node::install { '4.3.1':
-            user        => 'foo',
-            set_default => true,
-        }
+      nvm::node::install { '4.3.1':
+          user        => 'foo',
+          set_default => true,
+      }
 
-        nvm::node::install { '0.10.40':
-            user    => 'foo',
-        }
+      nvm::node::install { '0.10.40':
+          user    => 'foo',
+      }
+
+      nvm::node::install { '6.0.0':
+          user        => 'bar',
+          set_default => true,
+      }
     EOS
     let(:manifest) { pp }
 
@@ -41,6 +47,11 @@ describe 'nvm::node::install define' do
     describe command('su - foo -c ". /home/foo/.nvm/nvm.sh && nvm ls" -s /bin/bash') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should match /0.10.40/ }
+    end
+
+    describe command('su - bar -c ". /home/bar/.nvm/nvm.sh && nvm ls" -s /bin/bash') do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should match /6.0.0/ }
     end
 
   end
