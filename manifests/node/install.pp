@@ -43,25 +43,25 @@ define nvm::node::install (
     $nvm_install_options = ''
   }
 
-  exec { "nvm install node version ${version}":
+  exec { "nvm install node version ${version} for ${user}":
     cwd         => $final_nvm_dir,
     command     => ". ${final_nvm_dir}/nvm.sh && nvm install ${nvm_install_options} ${version}",
     user        => $user,
     unless      => ". ${final_nvm_dir}/nvm.sh && nvm which ${version}",
     environment => [ "NVM_DIR=${final_nvm_dir}" ],
-    require     => Class['nvm::install'],
+    require     => Nvm::Install[$user],
     provider    => shell,
   }
 
   if $is_default {
-    exec { "nvm set node version ${version} as default":
+    exec { "nvm set node version ${version} as default for ${user}":
       cwd         => $final_nvm_dir,
       command     => ". ${final_nvm_dir}/nvm.sh && nvm alias default ${version}",
       user        => $user,
       environment => [ "NVM_DIR=${final_nvm_dir}" ],
       unless      => ". ${final_nvm_dir}/nvm.sh && nvm which default | grep ${version}",
       provider    => shell,
-      require     => Exec["nvm install node version ${version}"],
+      require     => Exec["nvm install node version ${version} for ${user}"],
     }
   }
 }
