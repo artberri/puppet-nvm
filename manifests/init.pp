@@ -9,10 +9,11 @@ class nvm (
   $install_node        = $nvm::params::install_node,
   $node_instances      = $nvm::params::node_instances,
 ) inherits ::nvm::params {
+
   if $manage_dependencies {
-     $nvm_install_require = Package['git','wget','make']
-     ensure_packages(['git', 'wget', 'make'])
-   }
+      $nvm_install_require = Package['git','wget','make']
+      ensure_packages(['git', 'wget', 'make'])
+  }
 
   create_resources(::nvm::install, hiera_hash('nvm::install', {}))
   create_resources(::nvm::node::install, hiera_hash('nvm::node::install', {}))
