@@ -25,14 +25,14 @@ class nvm (
   }
 
   if $nvm_dir == undef {
-    $final_nvm_dir = "${home}/.nvm"
+    $final_nvm_dir = "${final_home}/.nvm"
   }
   else {
     $final_nvm_dir = $nvm_dir
   }
 
   if $profile_path == undef {
-    $final_profile_path = "${home}/.bashrc"
+    $final_profile_path = "${final_home}/.bashrc"
   }
   else {
     $final_profile_path = $profile_path
