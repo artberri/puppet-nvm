@@ -32,7 +32,7 @@ class nvm (
   }
 
   if $profile_path == undef {
-    $final_profile_path = "/home/${user}/.bashrc"
+    $final_profile_path = "${final_home}/.bashrc"
   }
   else {
     $final_profile_path = $profile_path
