@@ -23,7 +23,11 @@ define nvm::node::install (
   }
 
   if $nvm_dir == undef {
-    $final_nvm_dir = "/home/${user}/.nvm"
+    if $user == 'root' { 
+      $final_nvm_dir = "/root/.nvm"
+    } else {
+      $final_nvm_dir = "/home/${user}/.nvm"
+    }
   }
   else {
     $final_nvm_dir = $nvm_dir
