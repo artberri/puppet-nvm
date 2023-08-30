@@ -38,19 +38,6 @@ class nvm (
     $final_profile_path = $profile_path
   }
 
-  validate_string($user)
-  validate_string($final_home)
-  validate_string($final_nvm_dir)
-  validate_string($final_profile_path)
-  validate_string($version)
-  validate_bool($manage_user)
-  validate_bool($manage_dependencies)
-  validate_bool($manage_profile)
-  if $install_node {
-    validate_string($install_node)
-  }
-  validate_hash($node_instances)
-
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
   }

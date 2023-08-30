@@ -29,13 +29,6 @@ define nvm::node::install (
     $final_nvm_dir = $nvm_dir
   }
 
-  validate_string($user)
-  validate_string($final_nvm_dir)
-  validate_string($version)
-  validate_bool($default)
-  validate_bool($set_default)
-  validate_bool($from_source)
-
   if $from_source {
     $nvm_install_options = ' -s '
   }
