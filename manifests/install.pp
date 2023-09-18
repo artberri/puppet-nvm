@@ -1,12 +1,12 @@
 # See README.md for usage information
 class nvm::install (
-  $user,
-  $home,
-  $version,
-  $nvm_dir,
-  $nvm_repo,
-  $dependencies,
-  $refetch,
+  String  $user,
+  String  $home,
+  String  $version,
+  String  $nvm_dir,
+  String  $nvm_repo,
+  Array   $dependencies,
+  Boolean $refetch,
 ) {
 
   exec { "git clone ${nvm_repo} ${nvm_dir}":

@@ -1,9 +1,10 @@
 # See README.md for usage information
 class nvm (
-  $user,
-  $home                = undef,
-  $nvm_dir             = undef,
-  $profile_path        = undef,
+  String           $user,
+  Optional[String] $home                = undef,
+  Optional[String] $nvm_dir             = undef,
+  Optional[String] $profile_path        = undef,
+
   $version             = $nvm::params::version,
   $manage_user         = $nvm::params::manage_user,
   $manage_dependencies = $nvm::params::manage_dependencies,
@@ -37,19 +38,6 @@ class nvm (
   else {
     $final_profile_path = $profile_path
   }
-
-  validate_legacy(String, 'validate_string', $user)
-  validate_legacy(String, 'validate_string', $final_home)
-  validate_legacy(String, 'validate_string', $final_nvm_dir)
-  validate_legacy(String, 'validate_string', $final_profile_path)
-  validate_legacy(String, 'validate_string', $version)
-  validate_legacy(Boolean, 'validate_bool', $manage_user)
-  validate_legacy(Boolean, 'validate_bool', $manage_dependencies)
-  validate_legacy(Boolean, 'validate_bool', $manage_profile)
-  if $install_node {
-    validate_legacy(String, 'validate_string', $install_node)
-  }
-  validate_legacy(Hash, 'validate_hash', $node_instances)
 
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
