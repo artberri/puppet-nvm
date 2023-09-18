@@ -87,14 +87,14 @@ class nvm (
       ensure => 'present',
       path   => $final_profile_path,
       owner  => $user,
-    } ->
+    }
 
-    file_line { 'add NVM_DIR to profile file':
+    -> file_line { 'add NVM_DIR to profile file':
       path => $final_profile_path,
       line => "export NVM_DIR=${final_nvm_dir}",
-    } ->
+    }
 
-    file_line { 'add . ~/.nvm/nvm.sh to profile file':
+    -> file_line { 'add . ~/.nvm/nvm.sh to profile file':
       path => $final_profile_path,
       line => "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"  # This loads nvm",
     }
