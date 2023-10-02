@@ -1,11 +1,11 @@
 # See README.md for usage information
 define nvm::node::install (
-  $user,
-  $nvm_dir     = undef,
-  $version     = $title,
-  $set_default = false,
-  $from_source = false,
-  $default     = false,
+  String           $user,
+  Optional[String] $nvm_dir     = undef,
+  String           $version     = $title,
+  Boolean          $set_default = false,
+  Boolean          $from_source = false,
+  Boolean          $default     = false,
 ) {
 
   # The base class must be included first because it is used by parameter defaults
@@ -28,13 +28,6 @@ define nvm::node::install (
   else {
     $final_nvm_dir = $nvm_dir
   }
-
-  validate_string($user)
-  validate_string($final_nvm_dir)
-  validate_string($version)
-  validate_bool($default)
-  validate_bool($set_default)
-  validate_bool($from_source)
 
   if $from_source {
     $nvm_install_options = ' -s '
